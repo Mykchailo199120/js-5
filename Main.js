@@ -103,17 +103,26 @@ console.log(counter());
  * console.log(myPow(2, 0, myPrint))  // 2^0=1
  * console.log(myPow(2, -2, myPrint)) // 2^-2=0.25
  */
+function myPrint(a, b, res) {
+    return `${a}^${b}=${res}`;
+}
 
- const myPrint = (a, b, res) => `${a}^${b}=${res}`;
- const myPow = (a, b, myPrint) => {
-     if(b === 0) {
-         return myPrint (a, b, 1);
-     }else if (b > 0) {
-         return myPrint(a, b, a * myPow(a, b - 1, myPrint).split('=')[1]);
-     }else {
-         return myPrint(a, b, 1 / myPow(a, -b, myPrint ).split('=')[1]);
-     }
- }
+function myPow(a, b, myPrint) {
+    function powHelper(a, b) {
+        if (b === 0) {
+            return 1;
+        } else if (b > 0) {
+            return a * powHelper(a, b - 1);
+        } else {
+            return 1 / powHelper(a, -b);
+        }
+    }
+
+    const result = powHelper(a, b);
+    return myPrint(a, b, result);
+}
+
+
 
  console.log(myPow(3, 4, myPrint)) // 3^4=81
  console.log(myPow(2, 3, myPrint)) // 2^3=8
